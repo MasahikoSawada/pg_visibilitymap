@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * pg_visibilitymap.c
- *  display contents of a free space map
+ *  display contents of a visibility map
  *
  *-------------------------------------------------------------------------
  */
@@ -14,8 +14,7 @@
 PG_MODULE_MAGIC;
 
 /*
- * Returns the amount of free space on a given page, according to the
- * visibility map.
+ * Returns visibility on a given page, according to the visibility map.
  */
 PG_FUNCTION_INFO_V1(pg_is_all_visible);
 

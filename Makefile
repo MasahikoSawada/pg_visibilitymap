@@ -3,7 +3,7 @@ OBJS = pg_visibilitymap.o $(WIN32RES)
 
 EXTENSION = pg_visibilitymap
 DATA = pg_visibilitymap--1.0.sql pg_visibilitymap--unpackaged--1.0.sql
-PGFILEDESC = "pg_visibilitymap - monitoring of free space map"
+PGFILEDESC = "pg_visibilitymap - monitoring of visibility map"
 
 ifdef USE_PGXS
 PG_CONFIG = pg_config
