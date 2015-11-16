@@ -1,0 +1,5 @@
+# pg_visibilitymapmap extension
+comment = 'examine the VisibilityMap (VM)'
+default_version = '1.0'
+module_pathname = '$libdir/pg_visibilitymap'
+relocatable = true
