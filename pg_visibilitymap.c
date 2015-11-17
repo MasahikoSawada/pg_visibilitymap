@@ -8,8 +8,10 @@
 #include "postgres.h"
 
 #include "access/visibilitymap.h"
+#include "catalog/pg_class.h"
 #include "funcapi.h"
 #include "storage/bufmgr.h"
+#include "utils/rel.h"
 
 PG_MODULE_MAGIC;
 
@@ -32,6 +34,15 @@ pg_is_all_visible(PG_FUNCTION_ARGS)
 
 	rel = relation_open(relid, AccessShareLock);
 
+	/* Check for relation type */
+	if (!(rel->rd_rel->relkind == RELKIND_RELATION ||
+		  rel->rd_rel->relkind == RELKIND_MATVIEW))
+		ereport(ERROR,
+				(errcode(ERRCODE_WRONG_OBJECT_TYPE),
+				 errmsg("\"%s\" is not a table or materialized view",
+						RelationGetRelationName(rel))));
+
+	/* Check for the number of blocks */
 	if (blkno < 0 || blkno > MaxBlockNumber)
 		ereport(ERROR,
 				(errcode(ERRCODE_INVALID_PARAMETER_VALUE),
