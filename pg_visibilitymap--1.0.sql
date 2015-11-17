@@ -6,7 +6,7 @@
 CREATE FUNCTION pg_is_all_visible(regclass, bigint)
 RETURNS bool
 AS 'MODULE_PATHNAME', 'pg_is_all_visible'
-LANGUAGE C STRICT;
+LANGUAGE C VOLATILE STRICT;
 
 CREATE FUNCTION
   pg_visibilitymap(rel regclass, blkno OUT bigint, all_visible OUT bool)
@@ -15,7 +15,7 @@ AS $$
   SELECT blkno, pg_is_all_visible($1, blkno) AS all_visible 
   FROM generate_series(0, pg_relation_size($1) / current_setting('block_size')::bigint - 1) AS blkno;
 $$
-LANGUAGE SQL;
+LANGUAGE SQL VOLATILE STRICT;
 
 -- Don't want these to be available to public.
 REVOKE ALL ON FUNCTION pg_is_all_visible(regclass, bigint) FROM PUBLIC;
