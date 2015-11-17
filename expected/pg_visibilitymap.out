@@ -1,0 +1,47 @@
+create extension pg_visibilitymap;
+create table t1 as select * from generate_series(1,1000) as p;
+\d t1
+      Table "public.t1"
+ Column |  Type   | Modifiers 
+--------+---------+-----------
+ p      | integer | 
+
+vacuum t1;
+select relpages from pg_class where relname = 't1';
+ relpages 
+----------
+        5
+(1 row)
+
+select * from pg_visibilitymap('t1');
+ blkno | all_visible 
+-------+-------------
+     0 | t
+     1 | t
+     2 | t
+     3 | t
+     4 | t
+(5 rows)
+
+delete from t1 where p < 500;
+select * from pg_visibilitymap('t1');
+ blkno | all_visible 
+-------+-------------
+     0 | f
+     1 | f
+     2 | f
+     3 | t
+     4 | t
+(5 rows)
+
+vacuum t1;
+select * from pg_visibilitymap('t1');
+ blkno | all_visible 
+-------+-------------
+     0 | t
+     1 | t
+     2 | t
+     3 | t
+     4 | t
+(5 rows)
+
