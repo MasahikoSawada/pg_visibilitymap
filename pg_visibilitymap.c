@@ -21,6 +21,16 @@ PG_MODULE_MAGIC;
 PG_FUNCTION_INFO_V1(pg_is_all_visible);
 
 /*
+ * The function prototypes are created as a part of PG_FUNCTION_INFO_V1
+ * macro since 9.4, and hence the declaration of the function prototypes
+ * here is necessary only for 9.3 or before.
+ */
+#if PG_VERSION_NUM < 90400
+Datum	pg_is_all_visible(PG_FUNCTION_ARGS);
+#endif
+
+
+/*
  * Return the page is all-visible or not, according to the visibility map.
  */
 Datum
