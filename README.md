@@ -19,3 +19,10 @@ $ psql
 =# CREATE EXTENSION pg_visibilitymap;
 CREATE EXTENSION
 ```
+
+# Supporting platform
+pg_visibilitymap has been built and tested on;
+
+OS : Linux
+
+DBMS : PostgreSQL 9.3 or later
